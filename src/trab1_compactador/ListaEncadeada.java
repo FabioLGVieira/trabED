@@ -48,4 +48,18 @@ public class ListaEncadeada {
         }
         return -1;
     }
+    
+    
+    
+    public String PalaravaPosicaoNo(int posicao){
+        No temp=ini;
+        
+        while(temp!=null){
+            if(temp.getPos() == posicao){
+                return temp.getPalavra();
+            }
+            temp=temp.getProx();
+        }
+        return null;
+    }
 }
