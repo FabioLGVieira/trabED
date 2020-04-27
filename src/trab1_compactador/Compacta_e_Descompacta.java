@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -23,6 +23,7 @@ public class Compacta_e_Descompacta {
         ListaEncadeada lista = new ListaEncadeada();
         compacta(lista);
         descompacta(lista);
+        System.out.println();
     }
 
     static void compacta(ListaEncadeada lista) {
@@ -34,7 +35,7 @@ public class Compacta_e_Descompacta {
             String linha;
 
             while ((linha = br.readLine()) != null) {
-                String[] palavras = linha.split("[ \\!\\\"\\#\\$\\%\\s&'()*+,-./:;<=>?@\\[\\]_`{|}~]");
+                String[] palavras = linha.split(", "+" "+"--"+"\n "+". "+" --"+"'");
                 //String[] palavras = linha.split("[.,\\s'-@]");
 
                 for (int i = 0; i < palavras.length; i++) {
@@ -44,8 +45,8 @@ public class Compacta_e_Descompacta {
                         linha = linha.replace(palavras[i], String.valueOf(lista.posicaoNo(palavras[i])));
                     }
                 }
-                sb.append(linha);
-                sb.append("\n");
+                System.out.println(linha);
+                
             }
             sb.append("0");
             fr.close();
@@ -81,7 +82,7 @@ public class Compacta_e_Descompacta {
             String linha;
 
             while ((linha = br.readLine()) != null) {
-                String[] palavras = linha.split("[ \\!\\\"\\#\\$\\%\\s&'()*+,-./:;<=>?@\\[\\]_`{|}~]");
+                  String[] palavras = linha.split(", "+" "+"--"+"\n "+". "+" --"+"'");
                 //String[] palavras = linha.split("[.,\\s'-@]");
                 int[] numeros = new int[palavras.length];
                 int j = 0;
@@ -95,8 +96,8 @@ public class Compacta_e_Descompacta {
                     }
                 }
 
-                sb.append(linha);
-                sb.append("\n");
+                System.out.println(linha);
+              
             }
             fr.close();
             EscreveArquivo("descompactado", sb, false);
