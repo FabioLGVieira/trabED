@@ -63,9 +63,9 @@ public class Compacta_e_Descompacta {
             escritor.append(conteudo);
             escritor.close();
             if (compacta) {
-                System.out.println("Arquivo descompactado!");
+                 System.out.println("Arquivo compactado!");
             } else {
-                System.out.println("Arquivo compactado!");
+                 System.out.println("Arquivo descompactado!");
              
             }
         } catch (IOException ex) {
@@ -90,12 +90,12 @@ public class Compacta_e_Descompacta {
                     String a = palavras[i];
                     System.out.println(a);
                     if (isNumeric(palavras[i]) && !palavras[i].equals("0")) {
-                        //numeros[j] = Integer.parseInt(palavras[i]);
-                        //j++;
+                        numeros[j] = Integer.parseInt(palavras[i]);
+                        j++;
                         linha = linha.replace(palavras[i], lista.PalaravaPosicaoNo(Integer.parseInt(palavras[i])));
                     }
+                     sb.append(palavras[i]+"\n");
                 }
-                  sb.append(palavras[j]+"\n");
             }
              sb.append("0");
             fr.close();
