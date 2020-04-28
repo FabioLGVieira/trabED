@@ -1,4 +1,4 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -20,9 +20,7 @@ public class Compacta_e_Descompacta {
     public static void main(String[] args) {
         ListaEncadeada lista = new ListaEncadeada();
         compacta(lista);
-        descompacta(lista);
-      
-        
+        //descompacta(lista);
     }
 
     static void compacta(ListaEncadeada lista) {
@@ -30,22 +28,33 @@ public class Compacta_e_Descompacta {
             File arquivoLido = new File("original.txt");
             FileReader fr = new FileReader(arquivoLido);
             BufferedReader br = new BufferedReader(fr);
-            StringBuffer sb = new StringBuffer();
+            StringBuffer sb = new StringBuffer();//ou builder
+            StringBuffer novalinha = new StringBuffer();
             String linha;
 
             while ((linha = br.readLine()) != null) {
-                String[] palavras = linha.split(", "+" "+"--"+"\n "+". "+" --"+"'");
-                //String[] palavras = linha.split("[.,\\s'-@]");
+                String palavra = "";
 
-                for (int i = 0; i < palavras.length; i++) {
-                    if (!lista.buscaLinear(palavras[i]) || lista.vazia()) {
-                        lista.insereInicio(palavras[i]);
+                for (int i = 0; i < linha.length(); i++) { //percorre a linha caracter por caracter
+                    if (Character.isLetter(linha.charAt(i))) { // ve se o caracter é letra
+                        palavra += linha.charAt(i); // vai formando a palavra
                     } else {
-                        linha = linha.replace(palavras[i], String.valueOf(lista.posicaoNo(palavras[i])));
-                    }    
-                    
-                   sb.append(palavras[i]+"\n");
+                        if (!lista.buscaLinear(palavra) || lista.vazia()) {// adiciona na lista se a palavra formada ainda nao existir nela
+                            lista.insereInicio(palavra);
+                            novalinha.append(palavra);
+                        } else if (!palavra.equals("")) { // se ja tiver a palavra forma, só muda para a posiçao
+                            palavra = String.valueOf(lista.posicaoNo(palavra));
+                            novalinha.append(palavra);
+                        }
+                        novalinha.append(linha.charAt(i)); // construi a nova linha
+                        palavra = "";
+                    }
                 }
+                palavra = (lista.buscaLinear(palavra)) ? String.valueOf(lista.posicaoNo(palavra)) : palavra;
+                novalinha.append(palavra); // adiciona a ultima palavra na linha
+                sb.append(novalinha);// adiciona a linha no arquivo
+                sb.append("\n");
+                novalinha.delete(0, novalinha.length());
             }
             sb.append("0");
             fr.close();
@@ -63,10 +72,9 @@ public class Compacta_e_Descompacta {
             escritor.append(conteudo);
             escritor.close();
             if (compacta) {
-                 System.out.println("Arquivo compactado!");
+                System.out.println("Arquivo compactado!");
             } else {
-                 System.out.println("Arquivo descompactado!");
-             
+                System.out.println("Arquivo descompactado!");
             }
         } catch (IOException ex) {
             System.out.println("ocorreu um erro ao escrever arquivo!");
@@ -78,26 +86,50 @@ public class Compacta_e_Descompacta {
             File arquivoLido = new File("compactado.txt");
             FileReader fr = new FileReader(arquivoLido);
             BufferedReader br = new BufferedReader(fr);
-            StringBuffer sb = new StringBuffer();
+            StringBuffer sb = new StringBuffer();//ou builder
+            StringBuffer novalinha = new StringBuffer();
             String linha;
 
             while ((linha = br.readLine()) != null) {
-                  String[] palavras = linha.split(", "+" "+"--"+"\n "+". "+" --"+"'");
+                String palavra = "";
+
+                for (int i = 0; i < linha.length(); i++) {
+                    if (Character.isDigit(linha.charAt(i))) {
+                        palavra += linha.charAt(i);
+                    } else {
+                        if (!lista.buscaLinear(palavra) || lista.vazia()) {
+                            lista.insereInicio(palavra);
+                            novalinha.append(palavra);
+                        } else if (!palavra.equals("")) {
+                            palavra = String.valueOf(lista.posicaoNo(palavra));
+                            novalinha.append(palavra);
+                        }
+                        novalinha.append(linha.charAt(i));
+                        palavra = "";
+                    }
+                }
+
+                sb.append(novalinha);
+                sb.append("\n");
+                sb.delete(0, sb.length());
+            }
+            while ((linha = br.readLine()) != null) {
+                String[] palavras = linha.split("([-#@.*&: ]+ ?)");
                 //String[] palavras = linha.split("[.,\\s'-@]");
                 int[] numeros = new int[palavras.length];
                 int j = 0;
                 for (int i = 0; i < palavras.length; i++) {
-                    String a = palavras[i];
-                    System.out.println(a);
+
                     if (isNumeric(palavras[i]) && !palavras[i].equals("0")) {
-                        numeros[j] = Integer.parseInt(palavras[i]);
-                        j++;
-                        linha = linha.replace(palavras[i], lista.PalaravaPosicaoNo(Integer.parseInt(palavras[i])));
+                        //numeros[j] = Integer.parseInt(palavras[i]);
+                        //j++;
+                        //linha = linha.replace(palavras[i], lista.PalaravaPosicaoNo(Integer.parseInt(palavras[i])));
                     }
-                     sb.append(palavras[i]+"\n");
                 }
+
+                sb.append(linha);
+                sb.append("\n");
             }
-             sb.append("0");
             fr.close();
             EscreveArquivo("descompactado", sb, false);
         } catch (IOException e) {
