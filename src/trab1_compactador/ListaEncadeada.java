@@ -60,6 +60,6 @@ public class ListaEncadeada {
             }
             temp=temp.getProx();
         }
-        return null;
+        return "0";
     }
 }
