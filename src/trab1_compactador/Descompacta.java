@@ -16,14 +16,13 @@ import java.io.IOException;
  * @author fabio,diego, valter
  */
 public class Descompacta {
-    public static void main(String[] args) {
-        ListaEncadeada listaDescompacta = new ListaEncadeada();
-        descompacta(listaDescompacta);
-    }
 
-    static void descompacta(ListaEncadeada lista) {
+    //essa classe descompacta o arquivo mesmo se nao tiver a lista ja preenchida com as palavras originais
+    
+    public void descompacta(String nome) {
+        ListaEncadeada lista = new ListaEncadeada();
         try {
-            File arquivoLido = new File("compactado.txt");
+            File arquivoLido = new File(nome + ".txt");
             FileReader fr = new FileReader(arquivoLido);
             BufferedReader br = new BufferedReader(fr);
             StringBuffer sb = new StringBuffer();//ou builder
@@ -40,11 +39,10 @@ public class Descompacta {
                     } else if (Character.isDigit(linha.charAt(i))) {
                         numero += linha.charAt(i);
                     } else {
-                        if(!numero.equals("")){
-                        int num = Integer.parseInt(numero);
-                        novalinha.append(lista.PalaravaPosicaoNo(num));
-                        }
-                        else if (!lista.buscaLinear(palavra) || lista.vazia()) {// adiciona na lista se a palavra formada ainda nao existir nela
+                        if (!numero.equals("")) {
+                            int num = Integer.parseInt(numero);
+                            novalinha.append(lista.PalaravaPosicaoNo(num));
+                        } else if (!lista.buscaLinear(palavra) || lista.vazia()) {// adiciona na lista se a palavra formada ainda nao existir nela
                             lista.insereInicio(palavra);
                             novalinha.append(palavra);
                         } else if (!palavra.equals("")) { // se ja tiver a palavra forma, só muda para a posiçao
@@ -56,10 +54,10 @@ public class Descompacta {
                         numero = "";
                     }
                 }
-                
+
                 palavra = (lista.buscaLinear(palavra) && !palavra.equals("")) ? String.valueOf(lista.posicaoNo(palavra)) : palavra;
                 numero = (!numero.equals("")) ? lista.PalaravaPosicaoNo(Integer.parseInt(numero)) : palavra;
-                
+
                 novalinha.append(numero); // adiciona a ultima palavra na linha
                 sb.append(novalinha);
                 novalinha.delete(0, sb.length());
@@ -79,7 +77,7 @@ public class Descompacta {
             escritor = new FileWriter(arquivo);
             escritor.append(conteudo);
             escritor.close();
-                System.out.println("Arquivo descompactado!");
+            System.out.println("Arquivo descompactado!");
         } catch (IOException ex) {
             System.out.println("ocorreu um erro ao escrever arquivo!");
         }

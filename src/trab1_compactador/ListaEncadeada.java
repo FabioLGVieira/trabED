@@ -10,55 +10,58 @@ package trab1_compactador;
  * @author fabio, diego, valter
  */
 public class ListaEncadeada {
+
     private No ini;
-    
-    public ListaEncadeada(){
-        this.ini=null;
+
+    public ListaEncadeada() {
+        this.ini = null;
     }
-    
-    public boolean vazia(){
-        return ini==null;
+
+    public void Limpar() {
+        this.ini.resetTopo();
     }
-    
-    public void insereInicio(String palavra){
-        No novo = new No(palavra,ini);
-        ini=novo;   
+
+    public boolean vazia() {
+        return ini == null;
     }
-    
-    public boolean buscaLinear(String palavra){
-        No temp=ini;
-        
-        while(temp!=null){
-            if(temp.getPalavra().equals(palavra)){
+
+    public void insereInicio(String palavra) {
+        No novo = new No(palavra, ini);
+        ini = novo;
+    }
+
+    public boolean buscaLinear(String palavra) {
+        No temp = ini;
+
+        while (temp != null) {
+            if (temp.getPalavra().equals(palavra)) {
                 return true;
             }
-            temp=temp.getProx();
+            temp = temp.getProx();
         }
         return false;
     }
-    
-    public int posicaoNo(String palavra){
-        No temp=ini;
-        
-        while(temp!=null){
-            if(temp.getPalavra().equals(palavra)){
+
+    public int posicaoNo(String palavra) {
+        No temp = ini;
+
+        while (temp != null) {
+            if (temp.getPalavra().equals(palavra)) {
                 return temp.getPos();
             }
-            temp=temp.getProx();
+            temp = temp.getProx();
         }
         return -1;
     }
-    
-    
-    
-    public String PalaravaPosicaoNo(int posicao){
-        No temp=ini;
-        
-        while(temp!=null){
-            if(temp.getPos() == posicao){
+
+    public String PalaravaPosicaoNo(int posicao) {
+        No temp = ini;
+
+        while (temp != null) {
+            if (temp.getPos() == posicao) {
                 return temp.getPalavra();
             }
-            temp=temp.getProx();
+            temp = temp.getProx();
         }
         return "0";
     }

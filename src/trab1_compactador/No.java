@@ -5,6 +5,8 @@
  */
 package trab1_compactador;
 
+import java.util.LinkedList;
+
 /**
  *
  * @author fabio, diego, valter
@@ -41,5 +43,6 @@ public class No {
         this.prox = prox;
     }
     
-    
+    public void resetTopo(){
+    this.topo = 0;}
 }
